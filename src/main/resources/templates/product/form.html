@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+  <head th:replace="~{fragments :: siteHead}"></head>
+
+  <body>
+
+  <header class="site-header">
+      <div class="site-header__inner">
+          <a class="brand" href="home.html" th:href="@{/}">
+              <img src="../static/images/happyPackLogo.png" alt="Happy Pack" th:src="@{/images/happyPackLogo.png}" />
+              <span class="brand__text">
+            <span class="brand__name">Happy Pack</span>
+            <span class="brand__tagline">Regalos útiles para cada ocasión</span>
+          </span>
+          </a>
+          <nav class="main-nav" aria-label="Navegación principal">
+              <a href="product/list.html" th:href="@{/product/list}">Productos</a>
+          </nav>
+      </div>
+  </header>
+
+    <main class="page">
+      <div class="page-header">
+        <p class="eyebrow">Catálogo</p>
+        <h1 th:text="${product == null ? 'Nuevo producto' : 'Editar producto'}">Nuevo Producto</h1>
+        <p class="lead" th:text="${product == null ? 'Añade un nuevo producto al catálogo.' : 'Modifica los datos del producto.'}">Añade un nuevo producto al catálogo.</p>
+      </div>
+
+      <form class="form-panel" th:action="@{/product/save}" method="post">
+        <fieldset>
+            <input type="hidden" name="id" th:if="${product}" th:value="${product.id}" />
+
+          <label for="name">Nombre</label>
+          <input id="name" type="text" name="name" th:value="${product == null ? '' : product.name}" required />
+
+          <label for="price">Precio (€)</label>
+          <input id="price" type="number" name="price" step="0.01" min="0" th:value="${product == null ? '' : product.price}" required />
+
+          <label for="inStock">
+            <input type="checkbox" id="inStock" name="inStock" th:checked="${product == null ? '' : product.inStock}" />
+            En stock
+          </label>
+
+          <input type="submit" value="Crear producto" th:value="${product == null ? 'Crear producto' : 'Guardar cambios'}" />
+        </fieldset>
+      </form>
+
+      <nav class="actions">
+        <a class="button button--secondary" href="list.html" th:href="@{/product/list}">Cancelar</a>
+      </nav>
+    </main>
+
+  <footer class="site-footer">
+      <div class="site-footer__inner">
+          <span>&copy; 2026 Happy Pack</span>
+      </div>
+  </footer>
+
+  </body>
+
+</html>
